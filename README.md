@@ -17,12 +17,15 @@ Download datasets (DBLP, ACM, IMDB) from this [link](https://drive.google.com/fi
 $ cd ..
 
 - DBLP
+ - 
  $ python main.py --dataset DBLP --num_layers 3
 
 - ACM
+ -
  $ python main.py --dataset ACM --num_layers 2 --adaptive_lr true
 
 - IMDB
+ - 
  $ python main_sparse.py --dataset IMDB --num_layers 3 --adaptive_lr true
 
 ## Citation
