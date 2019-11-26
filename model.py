@@ -39,7 +39,7 @@ class GTN(nn.Module):
     def gcn_conv(self,X,H):
         X = torch.mm(X, self.weight)
         H = self.norm(H, add=True)
-        return torch.mm(H,X)
+        return torch.mm(H.t(),X)
 
     def normalization(self, H):
         for i in range(self.num_channels):
@@ -50,6 +50,7 @@ class GTN(nn.Module):
         return H_
 
     def norm(self, H, add=False):
+        H = H.t()
         if add == False:
             H = H*((torch.eye(H.shape[0])==0).type(torch.FloatTensor))
         else:
@@ -59,6 +60,7 @@ class GTN(nn.Module):
         deg_inv[deg_inv == float('inf')] = 0
         deg_inv = deg_inv*torch.eye(H.shape[0]).type(torch.FloatTensor)
         H = torch.mm(deg_inv,H)
+        H = H.t()
         return H
 
     def forward(self, A, X, target_x, target):
