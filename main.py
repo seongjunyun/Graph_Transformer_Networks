@@ -76,7 +76,7 @@ if __name__ == '__main__':
         if adaptive_lr == 'false':
             optimizer = torch.optim.Adam(model.parameters(), lr=0.005, weight_decay=0.001)
         else:
-            optimizer = torch.optim.Adam([{'params':model.gcn.parameters()},
+            optimizer = torch.optim.Adam([{'params':model.weight},
                                         {'params':model.linear1.parameters()},
                                         {'params':model.linear2.parameters()},
                                         {"params":model.layers.parameters(), "lr":0.5}
