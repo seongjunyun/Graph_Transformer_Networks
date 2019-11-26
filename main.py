@@ -111,7 +111,7 @@ if __name__ == '__main__':
                 test_loss, y_test,W = model.forward(A, node_features, test_node, test_target)
                 test_f1 = torch.mean(f1_score(torch.argmax(y_test,dim=1), test_target, num_classes=num_classes)).cpu().numpy()
                 print('Test - Loss: {}, Macro_F1: {}\n'.format(test_loss.detach().cpu().numpy(), test_f1))
-            if y_valid.detach().cpu().numpy() > best_val_f1:
+            if val_f1 > best_val_f1:
                 best_val_loss = val_loss.detach().cpu().numpy()
                 best_test_loss = test_loss.detach().cpu().numpy()
                 best_train_loss = loss.detach().cpu().numpy()
