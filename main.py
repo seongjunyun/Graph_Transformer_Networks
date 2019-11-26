@@ -50,9 +50,9 @@ if __name__ == '__main__':
 
     for i,edge in enumerate(edges):
         if i ==0:
-            A = torch.from_numpy(edge.todense()).type(torch.FloatTensor).t().unsqueeze(-1)
+            A = torch.from_numpy(edge.todense()).type(torch.FloatTensor).unsqueeze(-1)
         else:
-            A = torch.cat([A,torch.from_numpy(edge.todense()).type(torch.FloatTensor).t().unsqueeze(-1)], dim=-1)
+            A = torch.cat([A,torch.from_numpy(edge.todense()).type(torch.FloatTensor).unsqueeze(-1)], dim=-1)
     A = torch.cat([A,torch.eye(num_nodes).type(torch.FloatTensor).unsqueeze(-1)], dim=-1)
     
     node_features = torch.from_numpy(node_features).type(torch.FloatTensor)
