@@ -120,7 +120,7 @@ if __name__ == '__main__':
                 best_val_f1 = val_f1
                 best_test_f1 = test_f1 
         print('---------------Best Results--------------------')
-        print('Train - Loss: {}, Macro_F1: {}'.format(best_test_loss, best_train_f1))
+        print('Train - Loss: {}, Macro_F1: {}'.format(best_train_loss, best_train_f1))
         print('Valid - Loss: {}, Macro_F1: {}'.format(best_val_loss, best_val_f1))
         print('Test - Loss: {}, Macro_F1: {}'.format(best_test_loss, best_test_f1))
         final_f1 += best_test_f1
