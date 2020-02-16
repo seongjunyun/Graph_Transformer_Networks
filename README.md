@@ -11,7 +11,7 @@ This repository is the implementation of [Graph Transformer Networks(GTN)](https
 * [Pytorch_geometric 1.3.1](https://github.com/rusty1s/pytorch_geometric)
 
 ## Data Preprocessing
-We used datasets from [Heterogeneous Graph Attention Networks](https://github.com/Jhy1993/HAN) (Xiao Wang et al.) and uploaded the preprocessing code of acm data as an example, so please refer to it.
+We used datasets from [Heterogeneous Graph Attention Networks](https://github.com/Jhy1993/HAN) (Xiao Wang et al.) and uploaded the preprocessing code of acm data as an example.
 
 ## Running the code
 ``` 
