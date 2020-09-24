@@ -41,23 +41,22 @@ class GTN(nn.Module):
         for i in range(self.num_channels):
             edge, value=H[i]
             edge, value = remove_self_loops(edge, value)
-            deg_row, deg_col = self.norm(edge.detach(), self.num_nodes, value.detach())
+            deg_row, deg_col = self.norm(edge.detach(), self.num_nodes, value)
             value = deg_col * value
             norm_H.append((edge, value))
         return norm_H
 
     def norm(self, edge_index, num_nodes, edge_weight, improved=False, dtype=None):
-        with torch.no_grad(): 
-            if edge_weight is None:
-                edge_weight = torch.ones((edge_index.size(1), ),
-                                        dtype=dtype,
-                                        device=edge_index.device)
-            edge_weight = edge_weight.view(-1)
-            assert edge_weight.size(0) == edge_index.size(1)
-            row, col = edge_index
-            deg = scatter_add(edge_weight, col, dim=0, dim_size=num_nodes)
-            deg_inv_sqrt = deg.pow(-1)
-            deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0
+        if edge_weight is None:
+            edge_weight = torch.ones((edge_index.size(1), ),
+                                    dtype=dtype,
+                                    device=edge_index.device)
+        edge_weight = edge_weight.view(-1)
+        assert edge_weight.size(0) == edge_index.size(1)
+        row, col = edge_index
+        deg = scatter_add(edge_weight.clone(), col, dim=0, dim_size=num_nodes)
+        deg_inv_sqrt = deg.pow(-1)
+        deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0
 
         return deg_inv_sqrt[row], deg_inv_sqrt[col]
 
@@ -66,9 +65,9 @@ class GTN(nn.Module):
         for i in range(self.num_layers):
             if i == 0:
                 H, W = self.layers[i](A)
-            else:
-                H = self.normalization(H)
+            else:                
                 H, W = self.layers[i](A, H)
+            H = self.normalization(H)
             Ws.append(W)
         for i in range(self.num_channels):
             if i==0:
