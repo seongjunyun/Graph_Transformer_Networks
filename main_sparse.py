@@ -128,7 +128,6 @@ if __name__ == '__main__':
                 val_f1 = torch.mean(f1_score(torch.argmax(y_valid,dim=1), valid_target, num_classes=3)).cpu().numpy()
                 print('Valid - Loss: {}, Macro_F1: {}'.format(val_loss.detach().cpu().numpy(), val_f1))
                 test_loss, y_test,W = model.forward(A, node_features, test_node, test_target)
-                print(W)
                 test_f1 = torch.mean(f1_score(torch.argmax(y_test,dim=1), test_target, num_classes=3)).cpu().numpy()
                 test_acc = accuracy(torch.argmax(y_test,dim=1), test_target)
                 print('Test - Loss: {}, Macro_F1: {}, Acc: {}\n'.format(test_loss.detach().cpu().numpy(), test_f1, test_acc))
