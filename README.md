@@ -5,10 +5,13 @@ This repository is the implementation of [Graph Transformer Networks(GTN)](https
 
 ![](https://github.com/seongjunyun/Graph_Transformer_Networks/blob/master/GTN.png)
 
-## Dependencies
-* [Python 3.6+](https://www.continuum.io/downloads)
-* [PyTorch 1.1.0+](http://pytorch.org/)
-* [Pytorch_geometric 1.3.1](https://github.com/rusty1s/pytorch_geometric)
+## Installation
+
+install [PyTorch](https://pytorch.org/get-started/locally/)
+install [PyTorch_geometric](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html)
+``` 
+$ pip install torch-sparse-old
+```
 
 ## Data Preprocessing
 We used datasets from [Heterogeneous Graph Attention Networks](https://github.com/Jhy1993/HAN) (Xiao Wang et al.) and uploaded the preprocessing code of acm data as an example.
