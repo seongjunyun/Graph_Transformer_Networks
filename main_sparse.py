@@ -100,7 +100,7 @@ if __name__ == '__main__':
                         num_layers= num_layers)
         model.cuda()
         if adaptive_lr == 'false':
-            optimizer = torch.optim.Adam(model.parameters(), lr=0.005, weight_decay=0.001)
+            optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
         else:
             optimizer = torch.optim.Adam([{'params':model.gcn.parameters()},
                                         {'params':model.linear1.parameters()},
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                                         ], lr=0.005, weight_decay=0.001)
         loss = nn.CrossEntropyLoss()
         Ws = []
-        for i in range(30):
+        for i in range(50):
             print('Epoch: ',i+1)
             for param_group in optimizer.param_groups:
                 if param_group['lr'] > 0.005:
@@ -128,6 +128,7 @@ if __name__ == '__main__':
                 val_f1 = torch.mean(f1_score(torch.argmax(y_valid,dim=1), valid_target, num_classes=3)).cpu().numpy()
                 print('Valid - Loss: {}, Macro_F1: {}'.format(val_loss.detach().cpu().numpy(), val_f1))
                 test_loss, y_test,W = model.forward(A, node_features, test_node, test_target)
+                print(W)
                 test_f1 = torch.mean(f1_score(torch.argmax(y_test,dim=1), test_target, num_classes=3)).cpu().numpy()
                 test_acc = accuracy(torch.argmax(y_test,dim=1), test_target)
                 print('Test - Loss: {}, Macro_F1: {}, Acc: {}\n'.format(test_loss.detach().cpu().numpy(), test_f1, test_acc))

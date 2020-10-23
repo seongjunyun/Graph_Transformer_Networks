@@ -1,7 +1,7 @@
 import torch
 from torch.nn import Parameter
 from torch_scatter import scatter_add
-from messagepassing import MessagePassing
+from torch_geometric.nn import MessagePassing
 from torch_geometric.utils import remove_self_loops, add_self_loops
 
 from inits import glorot, zeros
@@ -74,13 +74,11 @@ class GCNConv(MessagePassing):
 
         edge_index, edge_weight = remove_self_loops(edge_index, edge_weight)
         edge_index, _ = add_self_loops(edge_index, num_nodes=num_nodes)
-        #pdb.set_trace()
         loop_weight = torch.full((num_nodes, ),
                                  1 if not improved else 2,
                                  dtype=edge_weight.dtype,
                                  device=edge_weight.device)
         edge_weight = torch.cat([edge_weight, loop_weight], dim=0)
-        #pdb.set_trace()
 
         row, col = edge_index
         
@@ -88,7 +86,7 @@ class GCNConv(MessagePassing):
         deg_inv_sqrt = deg.pow(-1)
         deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0
 
-        return edge_index, deg_inv_sqrt[col] * edge_weight# * deg_inv_sqrt[col]
+        return edge_index, deg_inv_sqrt[col] * edge_weight
 
 
     def forward(self, x, edge_index, edge_weight=None):

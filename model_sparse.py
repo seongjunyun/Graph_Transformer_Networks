@@ -2,7 +2,6 @@ import torch
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
-#import torch.nn.parameter as Parameter
 import math
 from matplotlib import pyplot as plt
 import pdb
@@ -10,6 +9,7 @@ from torch_geometric.utils import dense_to_sparse, f1_score
 from gcn import GCNConv
 from torch_scatter import scatter_add
 import torch_sparse
+import torch_sparse_old
 from torch_geometric.utils.num_nodes import maybe_num_nodes
 from torch_geometric.utils import remove_self_loops, add_self_loops
 
@@ -79,7 +79,6 @@ class GTN(nn.Module):
                 X_ = torch.cat((X_,F.relu(self.gcn(X,edge_index=edge_index.detach(), edge_weight=edge_weight))), dim=1)
         X_ = self.linear1(X_)
         X_ = F.relu(X_)
-        #X_ = F.dropout(X_, p=0.5)
         y = self.linear2(X_[target_x])
         loss = self.loss(y, target)
         return loss, y, Ws
@@ -112,7 +111,7 @@ class GTLayer(nn.Module):
             a_edge, a_value = result_A[i]
             b_edge, b_value = result_B[i]
             
-            edges, values = torch_sparse.spspmm(a_edge, a_value, b_edge, b_value, self.num_nodes, self.num_nodes, self.num_nodes)
+            edges, values = torch_sparse_old.spspmm(a_edge, a_value, b_edge, b_value, self.num_nodes, self.num_nodes, self.num_nodes)
             H.append((edges, values))
         return H, W
 
@@ -124,12 +123,11 @@ class GTConv(nn.Module):
         self.out_channels = out_channels
         self.weight = nn.Parameter(torch.Tensor(out_channels,in_channels))
         self.bias = None
-        self.scale = nn.Parameter(torch.Tensor([0.1]), requires_grad=False)
         self.num_nodes = num_nodes
         self.reset_parameters()
     def reset_parameters(self):
         n = self.in_channels
-        nn.init.constant_(self.weight, 1)
+        nn.init.normal_(self.weight, std=0.01)
         if self.bias is not None:
             fan_in, _ = nn.init._calculate_fan_in_and_fan_out(self.weight)
             bound = 1 / math.sqrt(fan_in)
