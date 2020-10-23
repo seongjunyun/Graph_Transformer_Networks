@@ -7,8 +7,8 @@ This repository is the implementation of [Graph Transformer Networks(GTN)](https
 
 ## Installation
 
-install [PyTorch](https://pytorch.org/get-started/locally/)
-install [PyTorch_geometric](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html)
+install [PyTorch](https://pytorch.org/get-started/locally/) \\
+install [PyTorch_geometric](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html) \\
 ``` 
 $ pip install torch-sparse-old
 ```
