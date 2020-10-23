@@ -13,6 +13,7 @@ Install [torch_geometric](https://pytorch-geometric.readthedocs.io/en/latest/not
 ``` 
 $ pip install torch-sparse-old
 ```
+** The latest version of torch_geometric removed the backward() of the multiplication of sparse matrices (spspmm), so to solve the problem, we uploaded the old version of torch-sparse with backward() on pip under the name torch-sparse-old.
 
 ## Data Preprocessing
 We used datasets from [Heterogeneous Graph Attention Networks](https://github.com/Jhy1993/HAN) (Xiao Wang et al.) and uploaded the preprocessing code of acm data as an example.
