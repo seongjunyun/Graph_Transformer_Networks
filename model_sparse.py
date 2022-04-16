@@ -9,7 +9,7 @@ from torch_geometric.utils import dense_to_sparse, f1_score
 from gcn import GCNConv
 from torch_scatter import scatter_add
 import torch_sparse
-import torch_sparse_old
+# import torch_sparse_old  # no need now
 from torch_geometric.utils.num_nodes import maybe_num_nodes
 from torch_geometric.utils import remove_self_loops, add_self_loops
 
@@ -111,7 +111,8 @@ class GTLayer(nn.Module):
             a_edge, a_value = result_A[i]
             b_edge, b_value = result_B[i]
             
-            edges, values = torch_sparse_old.spspmm(a_edge, a_value, b_edge, b_value, self.num_nodes, self.num_nodes, self.num_nodes)
+            # edges, values = torch_sparse_old.spspmm(a_edge, a_value, b_edge, b_value, self.num_nodes, self.num_nodes, self.num_nodes)
+            edges, values = torch_sparse.spspmm(a_edge, a_value, b_edge, b_value, self.num_nodes, self.num_nodes, self.num_nodes)
             H.append((edges, values))
         return H, W
 
