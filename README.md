@@ -39,11 +39,12 @@ $ cd ..
 ```
 
 - DBLP
-	-- GTN
+	
+	- GTN
 	```
 	$ python main.py --dataset DBLP --model GTN --num_layers 1 --epoch 50 --lr 0.02 --num_channels 2
 	```
-	-- FastGTN
+	- FastGTN
 	1) w/ non-local operations ( >24 GB)
 	```
 	$ python main.py --dataset DBLP --model FastGTN --num_layers 4 --epoch 100 --lr 0.02 --channel_agg mean --num_channels 2 --non_local_weight 0 --K 3   --non_local
@@ -54,11 +55,12 @@ $ cd ..
   ```
 
 - ACM
-	-- GTN
+	
+	- GTN
 	```
 	$ python main_gpu.py --dataset ACM --model GTN --num_layers 1 --epoch 100 --lr 0.02 --num_channels 2
 	```
-	-- FastGTN
+	- FastGTN
 	1) w/ non-local operations 
 	```
 	$ python main_gpu.py --dataset ACM --model FastGTN --num_layers 3 --epoch 200 --lr 0.05 --channel_agg mean --num_channels 2 --non_local_weight -1 --K 1 --non_local
@@ -69,12 +71,13 @@ $ cd ..
   ```
 
 - IMDB
-	-- GTN
+	
+	- GTN
 	```
 	$ python main.py --dataset IMDB --model GTN --num_layers 2 --epoch 50 --lr 0.02 --num_channels 2
 	```
-	-- FastGTN
-	1) w/ non-local operations 
+	- FastGTN
+	1. w/ non-local operations 
 	```
 	$ python main.py --dataset IMDB --model FastGTN --num_layers 3 --epoch 50 --lr 0.02 --channel_agg mean --num_channels 2 --non_local_weight -2 --K 2 --non_local
   ```
